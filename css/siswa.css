@@ -1,0 +1,48 @@
+/* =======================================================
+   SISWA.CSS
+   Semua gaya (style) untuk kotak pencarian dan kartu siswa
+   ======================================================= */
+
+/* Kotak input pencarian */
+.search-box {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  border: 1px solid #2a2f3a;
+  border-radius: 8px;
+  background-color: #161a23;
+  color: #e6e6e6;
+  font-size: 0.95rem;
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: #4f9dff; /* garis biru saat kotak diklik/aktif */
+}
+
+/* Grid/susunan kartu-kartu siswa */
+.siswa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+/* Satu kartu siswa */
+.siswa-card {
+  background-color: #161a23;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s; /* animasi halus saat hover */
+}
+
+.siswa-card:hover {
+  transform: translateY(-4px); /* kartu naik sedikit saat disentuh/hover */
+  background-color: #1d2330;
+}
+
+.siswa-card .nomor {
+  color: #4f9dff;
+  font-size: 0.75rem;
+  margin-bottom: 4px;
+}
