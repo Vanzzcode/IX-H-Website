@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Akun - Kelas IX-H</title>
+
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/akun.css" />
+  <link rel="stylesheet" href="css/ai-chat.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <a href="index.html" style="text-decoration:none;"><h1 class="logo">IX-H</h1></a>
+    <button id="hamburgerBtn" class="hamburger-btn" aria-label="Buka menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#beranda">Beranda</a></li>
+        <li><a href="index.html#siswa">Siswa</a></li>
+        <li><a href="index.html#jadwal">Jadwal</a></li>
+        <li><a href="index.html#struktur">Struktur Kelas</a></li>
+        <li><a href="wifi.html">WiFi</a></li>
+        <li><a href="login.html">Akun</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== FORM LOGIN ===== -->
+  <div class="akun-wrapper">
+    <div class="login-card">
+      <h2>Masuk Akun</h2>
+      <p class="subtitle">Gunakan username & sandi yang sudah diberikan.</p>
+
+      <form id="formLogin">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" autocomplete="username" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Sandi</label>
+          <input type="password" id="password" autocomplete="current-password" required />
+        </div>
+        <button type="submit" class="btn-login">Masuk</button>
+        <p class="login-error" id="loginError"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>&copy; 2026 Kelas IX-H. Dibuat dengan ❤️</p>
+  </footer>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/jadwal.js"></script>
+  <script src="js/ai-chat.js"></script>
+  <script src="js/ai-bubble.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Kalau sudah login, langsung lempar ke dashboard akun
+      if (ambilSesi()) {
+        window.location.href = "akun.html";
+        return;
+      }
+
+      pasangHamburgerMenu();
+      pasangBubbleAI();
+
+      const formLogin = document.getElementById("formLogin");
+      const loginError = document.getElementById("loginError");
+      const btnSubmit = formLogin.querySelector("button[type=submit]");
+
+      formLogin.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        loginError.textContent = "";
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = "Memeriksa...";
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        try {
+          const sesi = await cobaLogin(username, password);
+          if (sesi) {
+            window.location.href = "akun.html";
+          } else {
+            loginError.textContent = "Username atau sandi salah.";
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = "Masuk";
+          }
+        } catch (err) {
+          loginError.textContent = "Terjadi kesalahan saat menghubungi database.";
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = "Masuk";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
