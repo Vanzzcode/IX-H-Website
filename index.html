@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelas IX-H</title>
+
+  <!-- Menghubungkan file-file CSS (dipisah per bagian) -->
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/siswa.css" />
+  <link rel="stylesheet" href="css/jadwal.css" />
+  <link rel="stylesheet" href="css/akun.css" />
+  <link rel="stylesheet" href="css/ai-chat.css" />
+
+  <!-- Set tema (dark/light) SEBELUM CSS/HTML lain dirender, biar tidak ada
+       kedipan warna salah sesaat sebelum JS lain sempat jalan. -->
+  <script>
+    (function () {
+      var tema = localStorage.getItem("ixh_tema") || "dark";
+      document.documentElement.setAttribute("data-tema", tema);
+    })();
+  </script>
+
+  <!-- Library Supabase (dipakai untuk koneksi database akun, jadwal, dsb) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <span class="logo-badge">9H</span>
+      <span class="logo">Kelas IX-H</span>
+    </a>
+
+    <!-- Tombol hamburger, cuma muncul di layar kecil (diatur di navbar.css) -->
+    <button id="hamburgerBtn" class="hamburger-btn" aria-label="Buka menu">
+      <span class="garis-hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
+    <!-- Lapisan gelap di belakang panel menu mobile, klik untuk menutup -->
+    <div id="navOverlay" class="nav-overlay"></div>
+
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li class="nav-panel-header">
+          <span>Menu</span>
+          <button id="navTutupBtn" class="nav-tutup-btn" aria-label="Tutup menu">✕</button>
+        </li>
+        <li><a href="#beranda">Beranda</a></li>
+        <li><a href="#siswa">Siswa</a></li>
+        <li><a href="#jadwal">Jadwal</a></li>
+        <li><a href="#struktur">Struktur Kelas</a></li>
+        <li><a href="wifi.html">WiFi</a></li>
+        <li><a href="login.html" id="navAkunLink" class="nav-akun">Akun</a></li>
+        <li><button id="tombolTema" class="tombol-tema" aria-label="Ganti mode gelap/terang">🌙</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== BERANDA ===== -->
+  <section id="beranda" class="hero">
+    <span class="hero-eyebrow">Kelas IX-H · Tahun Ajaran 2026/2027</span>
+    <h2>Ruang Digital Kelas Kita</h2>
+    <p>Jadwal, info kelas, dan nama-nama IX-H, semuanya di satu tempat.</p>
+    <p id="statusOnlineText" class="status-online-text">Memuat status online...</p>
+  </section>
+
+  <!-- ===== STRUKTUR KELAS ===== -->
+  <section id="struktur" class="section">
+    <span class="section-eyebrow">Struktur Organisasi</span>
+    <h2>Struktur Kelas</h2>
+    <div class="struktur-grid">
+      <div class="struktur-card">
+        <h3>Wali Kelas</h3>
+        <p id="wali-kelas">-</p>
+      </div>
+      <div class="struktur-card">
+        <h3>Ketua Kelas</h3>
+        <p id="ketua-kelas">-</p>
+      </div>
+      <div class="struktur-card">
+        <h3>Wakil Ketua</h3>
+        <p id="wakil-ketua">-</p>
+      </div>
+      <div class="struktur-card">
+        <h3>Sekretaris</h3>
+        <p id="sekretaris">-</p>
+      </div>
+      <div class="struktur-card">
+        <h3>Bendahara</h3>
+        <p id="bendahara">-</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DAFTAR SISWA ===== -->
+  <section id="siswa" class="section">
+    <span class="section-eyebrow">36 Anggota</span>
+    <h2>Daftar Siswa</h2>
+
+    <!-- Kotak pencarian nama siswa -->
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Cari nama siswa..."
+      class="search-box"
+    />
+
+    <!-- Daftar siswa akan dimasukkan otomatis lewat JavaScript -->
+    <div id="daftarSiswa" class="siswa-grid"></div>
+  </section>
+
+  <!-- ===== JADWAL PELAJARAN & INFO BESOK ===== -->
+  <section id="jadwal" class="section">
+    <span class="section-eyebrow">Setiap Hari, Otomatis Diperbarui</span>
+    <h2 id="judulHariJadwal">Jadwal Hari Ini</h2>
+    <div id="jadwalContainer" class="jadwal-wrapper">
+      <p class="jadwal-kosong">Memuat jadwal...</p>
+    </div>
+
+    <h3 class="subjudul-info-besok">Info Besok</h3>
+    <div id="infoBesokContainer" class="info-besok-wrapper">
+      <p class="jadwal-kosong">Memuat info...</p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>&copy; 2026 Kelas IX-H. Dibuat dengan ❤️</p>
+  </footer>
+
+  <!-- Menghubungkan file-file JavaScript (diletakkan di akhir body) -->
+  <!-- Urutan HARUS seperti ini: data.js & supabase-client.js paling awal -->
+  <!-- karena dipakai oleh file-file lain. index.js paling akhir karena dia -->
+  <!-- yang menjalankan semua fungsi dari file-file sebelumnya. -->
+  <script src="js/data.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/siswa.js"></script>
+  <script src="js/jadwal.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/online-status.js"></script>
+  <script src="js/ai-chat.js"></script>
+  <script src="js/ai-bubble.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WiFi Kelas - Kelas IX-H</title>
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/wifi.css" />
+  <link rel="stylesheet" href="css/ai-chat.css" />
+
+  <script>
+    (function () {
+      var tema = localStorage.getItem("ixh_tema") || "dark";
+      document.documentElement.setAttribute("data-tema", tema);
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <span class="logo-badge">9H</span>
+      <span class="logo">Kelas IX-H</span>
+    </a>
+    <button id="hamburgerBtn" class="hamburger-btn" aria-label="Buka menu">
+      <span class="garis-hamburger"><span></span><span></span><span></span></span>
+    </button>
+    <div id="navOverlay" class="nav-overlay"></div>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li class="nav-panel-header">
+          <span>Menu</span>
+          <button id="navTutupBtn" class="nav-tutup-btn" aria-label="Tutup menu">✕</button>
+        </li>
+        <li><a href="index.html#beranda">Beranda</a></li>
+        <li><a href="index.html#siswa">Siswa</a></li>
+        <li><a href="index.html#jadwal">Jadwal</a></li>
+        <li><a href="index.html#struktur">Struktur Kelas</a></li>
+        <li><a href="wifi.html">WiFi</a></li>
+        <li><a href="login.html" id="navAkunLink" class="nav-akun">Akun</a></li>
+        <li><button id="tombolTema" class="tombol-tema" aria-label="Ganti mode gelap/terang">🌙</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== WIFI QR ===== -->
+  <div class="wifi-wrapper">
+    <div class="wifi-card">
+      <h2>WiFi Kelas</h2>
+      <p class="subtitle">Pindai QR di bawah untuk terhubung ke WiFi kelas.</p>
+      <div id="wifiContainer" class="wifi-qr-area">
+        <p class="jadwal-kosong">Memuat...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>&copy; 2026 Kelas IX-H. Dibuat dengan ❤️</p>
+  </footer>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/jadwal.js"></script>
+  <script src="js/ai-chat.js"></script>
+  <script src="js/ai-bubble.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      pasangHamburgerMenu();
+      pasangTombolTema();
+      pasangBubbleAI();
+
+      const navAkunLink = document.getElementById("navAkunLink");
+      if (navAkunLink && ambilSesi()) {
+        navAkunLink.href = "akun.html";
+        navAkunLink.textContent = "Akun (" + ambilSesi().nama.split(" ")[0] + ")";
+      }
+
+      const container = document.getElementById("wifiContainer");
+      try {
+        const { data, error } = await supabaseClient
+          .from("wifi_qr")
+          .select("qr_url")
+          .eq("id", 1)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (data && data.qr_url) {
+          container.innerHTML = `<img src="${data.qr_url}" alt="QR Code WiFi" class="wifi-qr-image" />`;
+        } else {
+          container.innerHTML = `<p class="wifi-belum-ada">WiFi belum tersedia, hanya tersedia di sekolah.</p>`;
+        }
+      } catch (err) {
+        container.innerHTML = `<p class="wifi-belum-ada">Gagal memuat QR WiFi. Coba muat ulang halaman.</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
