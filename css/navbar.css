@@ -1,0 +1,261 @@
+/* =======================================================
+   NAVBAR.CSS
+   Navbar dengan garis aksen gradient di bagian bawah (signature
+   visual situs ini). Di layar kecil, menu muncul sebagai panel
+   yang slide dari SISI KIRI (bukan dropdown kotak di tengah).
+   ======================================================= */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 28px;
+  background-color: var(--warna-navbar-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: sticky; /* navbar tetap nempel di atas saat discroll, sekaligus */
+  top: 0;           /* jadi acuan posisi untuk panel menu mobile */
+  z-index: 100;
+  border-bottom: 1px solid var(--warna-border);
+}
+
+/* Garis aksen tipis di bawah navbar -- elemen penanda khas situs ini,
+   diulang juga di border-top card sebagai satu "bahasa visual" */
+.navbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--gradien-aksen);
+  opacity: 0.55;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--warna-teks);
+  font-size: 1.3rem;
+}
+
+.logo-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--gradien-aksen);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #06121c;
+  flex-shrink: 0;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center; /* biar tombol tema (bulat) sejajar rapi dengan teks menu */
+  list-style: none; /* menghilangkan bulatan/nomor pada <li> */
+  gap: 4px;
+}
+
+.nav-links a {
+  position: relative;
+  display: inline-block;
+  color: var(--warna-teks-redup);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: color 0.18s ease, background-color 0.18s ease;
+}
+
+.nav-links a:hover {
+  color: var(--warna-teks);
+  background-color: var(--warna-card-terang);
+}
+
+/* Tombol "Akun" ditonjolkan sedikit lewat border, biar terasa seperti
+   pintu masuk yang berbeda dari link navigasi biasa */
+.nav-links a.nav-akun {
+  color: var(--warna-teks);
+  border: 1px solid var(--warna-border);
+}
+
+.nav-links a.nav-akun:hover {
+  border-color: var(--warna-aksen);
+}
+
+.tombol-tema {
+  margin-left: 6px;
+}
+
+/* Header panel menu ("Menu" + tombol X) hanya relevan untuk versi
+   sidebar mobile, jadi disembunyikan default di layar besar */
+.nav-panel-header {
+  display: none;
+}
+
+/* ---- TOMBOL HAMBURGER ---- */
+/* Ikon digambar murni dari CSS (bukan karakter emoji/teks), supaya
+   tampilannya konsisten di semua HP -- emoji "✕" bisa dirender beda-beda
+   tergantung font sistem tiap device. */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hamburger-btn {
+  position: relative;
+  width: 18px;
+  height: 14px;
+  transform: translateX(20vw);
+}
+
+.garis-hamburger {
+  position: relative;
+}
+
+.hamburger-btn span {
+  position: absolute;
+  left: 0;
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--warna-teks);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease;
+}
+
+.hamburger-btn span:nth-child(1) { top: 0; }
+.hamburger-btn span:nth-child(2) { top: 6px; }
+.hamburger-btn span:nth-child(3) { top: 12px; }
+
+/* ---- RESPONSIVE: LAYAR KECIL (HP) ---- */
+/* @media artinya "aturan ini hanya berlaku kalau lebar layar <= 768px" */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 18px;
+  }
+
+  .hamburger-btn {
+    display: flex; /* munculkan tombol hamburger */
+  }
+
+  /* Lapisan gelap di belakang panel menu, menutup seluruh layar */
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(6, 8, 14, 0.55);
+    z-index: 98;
+  }
+
+  .nav-overlay.show {
+    display: block;
+  }
+
+  /* Panel menu slide dari SISI KIRI, bukan kotak mengambang di tengah */
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: fixed; /* "fixed" diukur relatif ke layar (viewport) */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(78vw, 300px);
+    height: 100vh;
+    background-color: var(--warna-card);
+    border-right: 1px solid var(--warna-border);
+    padding: 18px 18px 24px;
+    gap: 2px;
+    z-index: 99;
+    box-shadow: 0 0 40px var(--warna-bayangan);
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    overflow-y: auto;
+  }
+
+  /* Class "show" ditambahkan lewat JavaScript saat hamburger diklik */
+  .nav-links.show {
+    transform: translateX(0);
+  }
+
+  .nav-links a {
+    padding: 13px 14px;
+    border-radius: 10px;
+  }
+
+  .nav-links li {
+    border-bottom: none;
+  }
+
+  .nav-links a.nav-akun {
+    margin-top: 8px;
+  }
+
+  /* Header di bagian atas panel menu: judul "Menu" + tombol tutup (X),
+     supaya bagian atas panel tidak terasa kosong */
+  .nav-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 6px 16px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--warna-border);
+  }
+
+  .nav-panel-header span {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--warna-teks);
+  }
+
+  .nav-tutup-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    color: var(--warna-teks-redup);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-links li:has(.tombol-tema) {
+    display: flex;
+    justify-content: flex-start;
+    padding: 14px 4px 2px;
+  }
+
+  .tombol-tema {
+    margin-left: 0;
+  }
+}

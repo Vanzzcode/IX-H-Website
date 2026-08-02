@@ -1,0 +1,84 @@
+/* =======================================================
+   JADWAL.CSS
+   Gaya untuk section Jadwal Pelajaran & Info Besok di beranda.
+   ======================================================= */
+
+.jadwal-wrapper {
+  background-color: var(--warna-card);
+  border: 1px solid var(--warna-border);
+  border-radius: 14px;
+  padding: 8px 20px;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.tabel-jadwal {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.tabel-jadwal th,
+.tabel-jadwal td {
+  text-align: left;
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--warna-border);
+  white-space: nowrap;
+}
+
+.tabel-jadwal td:last-child {
+  color: var(--warna-teks-redup);
+  font-size: 0.8rem;
+  white-space: normal;
+}
+
+.tabel-jadwal th {
+  color: var(--warna-teks-redup);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tabel-jadwal tr:last-child td {
+  border-bottom: none;
+}
+
+.jadwal-kosong {
+  color: var(--warna-teks-redup);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.subjudul-info-besok {
+  margin-top: 32px;
+  margin-bottom: 8px;
+  color: var(--warna-teks);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.info-besok-wrapper {
+  background-color: var(--warna-card);
+  border: 1px solid var(--warna-border);
+  border-left: 3px solid var(--warna-hijau);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+
+.info-besok-isi {
+  color: var(--warna-teks);
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+
+.info-besok-meta {
+  color: var(--warna-teks-redup);
+  font-size: 0.78rem;
+  margin-top: 10px;
+}

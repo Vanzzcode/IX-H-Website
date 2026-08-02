@@ -1,0 +1,62 @@
+/* =======================================================
+   SISWA.CSS
+   Semua gaya (style) untuk kotak pencarian dan kartu siswa
+   ======================================================= */
+
+/* Kotak input pencarian */
+.search-box {
+  width: 100%;
+  padding: 12px 16px;
+  margin: 20px 0 22px;
+  border: 1px solid var(--warna-border);
+  border-radius: 10px;
+  background-color: var(--warna-card);
+  color: var(--warna-teks);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+}
+
+.search-box::placeholder {
+  color: var(--warna-teks-redup);
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: var(--warna-aksen); /* garis biru saat kotak diklik/aktif */
+}
+
+/* Grid/susunan kartu-kartu siswa */
+.siswa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+/* Satu kartu siswa */
+.siswa-card {
+  background-color: var(--warna-card);
+  border: 1px solid var(--warna-border);
+  padding: 14px 12px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.siswa-card:hover {
+  transform: translateY(-3px); /* kartu naik sedikit saat disentuh/hover */
+  background-color: var(--warna-card-terang);
+  border-color: var(--warna-aksen);
+}
+
+.siswa-card .nomor {
+  color: var(--warna-aksen);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+}
+
+.siswa-card .nama {
+  font-size: 0.85rem;
+  font-weight: 500;
+}

@@ -1,0 +1,105 @@
+/* =======================================================
+   THEME.CSS
+   Variabel warna untuk dark mode (default) dan light mode.
+   Semua file CSS lain memakai var(--...) ini, jadi ganti tema
+   otomatis mengganti seluruh tampilan tanpa duplikasi kode.
+
+   HARUS dimuat PALING AWAL (sebelum CSS lain) supaya variabelnya
+   sudah tersedia saat file CSS lain dibaca browser.
+   ======================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap");
+
+:root,
+[data-tema="dark"] {
+  --warna-bg: #0f1117;
+  --warna-card: #161a23;
+  --warna-card-terang: #1d2330;
+  --warna-teks: #e6e6e6;
+  --warna-teks-redup: #a0a0a0;
+  --warna-border: #2a3142;
+  --warna-aksen: #4f9dff;
+  --warna-aksen-hover: #3d84e0;
+  --warna-hijau: #4fd1a5;
+  --warna-hijau-hover: #3fb98d;
+  --warna-hijau-gelap: #04241a;
+  --warna-merah: #ff6b6b;
+  --warna-kuning: #ffb020;
+  --warna-kuning-gelap: #1a1200;
+  --warna-putih-tetap: #ffffff;
+  --warna-bayangan: rgba(0, 0, 0, 0.35);
+  --warna-navbar-bg: rgba(22, 26, 35, 0.82);
+}
+
+[data-tema="light"] {
+  --warna-bg: #f4f6fa;
+  --warna-card: #ffffff;
+  --warna-card-terang: #eef1f7;
+  --warna-teks: #1c2230;
+  --warna-teks-redup: #5b6472;
+  --warna-border: #dbe1ea;
+  --warna-aksen: #2f6fdb;
+  --warna-aksen-hover: #2558b3;
+  --warna-hijau: #29a878;
+  --warna-hijau-hover: #22885f;
+  --warna-hijau-gelap: #e3f7ef;
+  --warna-merah: #e0454f;
+  --warna-kuning: #c8850f;
+  --warna-kuning-gelap: #fff3dc;
+  --warna-putih-tetap: #ffffff;
+  --warna-bayangan: rgba(20, 30, 50, 0.12);
+  --warna-navbar-bg: rgba(255, 255, 255, 0.85);
+}
+
+/* ---- SIGNATURE: gradient aksen biru->hijau, dipakai berulang sebagai
+   penanda visual khas kelas ini (garis bawah navbar, border atas card,
+   tombol utama, dsb) ---- */
+:root {
+  --gradien-aksen: linear-gradient(120deg, var(--warna-aksen), var(--warna-hijau));
+  --font-display: "Sora", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+}
+
+/* Transisi halus saat ganti tema, biar tidak berkedip kasar */
+body,
+.navbar,
+.hero,
+.profil-card,
+.fitur-card,
+.jadwal-wrapper,
+.info-besok-wrapper,
+.login-card,
+.wifi-card,
+.ai-panel,
+.siswa-card,
+.struktur-card {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.tombol-tema {
+  background: none;
+  border: 1px solid var(--warna-border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--warna-teks);
+}
+
+.tombol-tema:hover {
+  border-color: var(--warna-aksen);
+}
+
+.status-online-text {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--warna-hijau);
+}
+
+.status-online-text::before {
+  content: "● ";
+}

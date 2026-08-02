@@ -1,0 +1,57 @@
+/* =======================================================
+   WIFI.CSS
+   Gaya untuk halaman WiFi Kelas (QR Code).
+   ======================================================= */
+
+.wifi-wrapper {
+  max-width: 440px;
+  margin: 64px auto;
+  padding: 0 20px;
+}
+
+.wifi-card {
+  background-color: var(--warna-card);
+  border: 1px solid var(--warna-border);
+  border-radius: 16px;
+  padding: 36px 30px;
+  text-align: center;
+  box-shadow: 0 12px 30px var(--warna-bayangan);
+}
+
+.wifi-card h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--warna-teks);
+  margin-bottom: 6px;
+}
+
+.wifi-card p.subtitle {
+  color: var(--warna-teks-redup);
+  font-size: 0.85rem;
+  margin-bottom: 26px;
+}
+
+.wifi-qr-area {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wifi-qr-image {
+  max-width: 100%;
+  width: 240px;
+  height: 240px;
+  object-fit: contain;
+  border-radius: 12px;
+  background-color: var(--warna-putih-tetap);
+  padding: 14px;
+  border: 1px solid var(--warna-border);
+}
+
+.wifi-belum-ada {
+  color: var(--warna-teks-redup);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  padding: 20px 10px;
+}
